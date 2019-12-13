@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <link rel="stylesheet" href="./index.css">
+</head>
+<body>
+  <form action="./addBookmarkView.html">
+    <section>
+      <h1>My Bookmarks</h1>
+      <label for="new-bookmark-name">Enter a new bookmark here:</label>
+      <input type="text" name = "new-bookmark-name" id = "new-bookmark-name" placeholder = "New bookmark name">
+      <label for="new-bookmark-url">Enter the URL:</label>
+      <input type="text" name = "new-bookmark-url" id = "new-bookmark-url" placeholder = "https://www.example.com">
+      <select name="ratings" id="filter-button">
+          <option value="">Select a Rating</option>
+          <option value="five-star">5 Stars</option>
+          <option value="four-star">4 Stars</option>
+          <option value="three-star">3 Stars</option>
+          <option value="two-star">2 Stars</option>
+          <option value="one-star">1 Star</option>
+        </select>
+      <label for="new-bookmark-description">Enter a description for the bookmark:</label>
+      <textarea name="new-bookmark-description" id="new-bookmark-description" cols="40" rows="10" placeholder="Enter your description here"></textarea>
+      <button class = 'cancel-new-bookmark'>Create</button>
+      <button class = 'create-new-bookmark'>Cancel</button>
+      <dialog open>
+        <p>Error:  Please select a rating!</p>
+        <button>Okay</button>
+      </dialog>
+    </section>
+  </form>
+</body>
+</html>
