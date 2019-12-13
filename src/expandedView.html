@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <link rel="stylesheet" href="./index.css">
+</head>
+<body>
+  <form action="./addBookmarkView.html">
+    <section>
+      <h1>My Bookmarks</h1>
+    
+      <button class = 'add-entry-button' type = 'button'>Add New</button>
+      <label for="filter-button"></label>
+      <select name="ratings" id="filter-button">
+        <option value="">Filter By Rating</option>
+        <option value="five-star">5 Stars</option>
+        <option value="four-star">4 Stars or more</option>
+        <option value="three-star">3 Stars or more</option>
+        <option value="two-star">2 Stars or more</option>
+        <option value="one-star">1 Star or more</option>
+      </select>
+    </section>
+    <section>
+      <!-- I will have all styling possible done in the .css
+           just not sure how to actually import index.css right now-->
+      <ul style = 'list-style: none;'>
+        <li class = 'bookmark-element'>
+          Bookmark #3
+          <span class = 'bookmark-rating'>Rated 5/5</span>
+        </li>
+        <div>
+            <button class = 'visit-site-button' type = 'button'>Visit Bookmark</button>
+            <button class = 'delete-bookmark-button' type = 'button' src = 'data:image/jpeg;base64,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'>Delete Bookmark</button>
+          </div>
+        <li class = 'bookmark-element'>
+          Bookmark #2
+          <span class = 'bookmark-rating'>Rated 5/5</span>
+        </li>
+        <li class = 'bookmark-element'>
+          Bookmark #1
+          <span class = 'bookmark-rating'>Rated 5/5</span>
+        </li>  
+      </ul>
+    </section>
+  </form>
+</body>
+</html>
+

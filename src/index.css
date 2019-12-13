@@ -35,3 +35,12 @@ span {
   padding-left: 80%;
 }
 
+.visit-site-button {
+  display: inline-block;
+}
+
+.delete-bookmark-button {
+  display: inline-block;
+  
+}
+
