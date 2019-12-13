@@ -11,8 +11,8 @@
   <form action="./addBookmarkView.html">
     <section>
       <h1>My Bookmarks</h1>
-    
-      <button class = 'add-entry-button' type = 'button'>Add New</button>
+      <div class = 'add-filter-buttons'>
+      <button class = 'add-entry-button' type = 'button'>Add Bookmark</button>
       <label for="filter-button"></label>
       <select name="ratings" id="filter-button">
         <option value="">Filter By Rating</option>
@@ -22,12 +22,13 @@
         <option value="two-star">2 Stars or more</option>
         <option value="one-star">1 Star or more</option>
       </select>
+      </div>
     </section>
     <section>
       <!-- I will have all styling possible done in the .css
            just not sure how to actually import index.css right now-->
       <ul style = 'list-style: none;'>
-        <li class = 'bookmark-element'>
+        <li class = 'bookmark-element' id = 'first-bookmark'>
           Bookmark #3
           <span class = 'bookmark-rating'>Rated 5/5</span>
         </li>
