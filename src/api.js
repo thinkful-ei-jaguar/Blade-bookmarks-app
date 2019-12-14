@@ -2,12 +2,9 @@
 const BASE_URL = '';
 
 
-/**
- * listApiFetch will be our wrapper function for fetch to standardize
- * our error handling.
- * 
- * 
- */
+
+//listApiFetch will be our wrapper function for fetch to 
+//standardize our error handling.
 
 const listApiFetch = function (...args) {};
 
