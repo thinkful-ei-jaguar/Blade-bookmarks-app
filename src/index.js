@@ -35,5 +35,4 @@ const main = function () {
   bookmarkApp.render();
 };
 
-export {testBookmark};
 $(main);

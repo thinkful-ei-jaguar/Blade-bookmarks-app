@@ -22,7 +22,7 @@ const getItems = function () {
 };
 
 //createItem POSTS a new item to the api
-//testBookmark is a test of the function
+
 
 
 const createItem = function (bookmark) {
