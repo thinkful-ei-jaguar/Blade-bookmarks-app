@@ -15,12 +15,25 @@ import bookmarkApp from './bookmark-app';
  */
 
 //Fires when the dom is loaded.  This makes the store reflect the server.
-
-const main = function () {
-  console.log('DOM is loaded');
-
-  const startMsg = $('<p>Webpack is working!</p>');
-  $('#root').append(startMsg);
+const testBookmark = {
+  "title": "DefNotYahoo",
+  "url": "http://www.yahoo.com",
+  "desc": "definitely not yahoo",
+  "rating": 5
 };
 
+const main = function () {
+  // eslint-disable-next-line quotes
+  console.log("It's alive!!!!");
+  api.getItems()
+    .then(res => res.json())
+    .then(res => console.log(res));
+
+  api.createItem(testBookmark);
+
+  bookmarkApp.bindEventListeners();
+  bookmarkApp.render();
+};
+
+export {testBookmark};
 $(main);

@@ -1,5 +1,5 @@
 //This will be our base api url that we append specific queries to
-const BASE_URL = '';
+const BASE_URL = 'https://thinkful-list-api.herokuapp.com/Blade/bookmarks';
 
 
 
@@ -17,11 +17,25 @@ const listApiFetch = function (...args) {};
 
 //getItems simply GETS the api server (api store) state
 
-const getItems = function () {};
+const getItems = function () {
+  return fetch(`${BASE_URL}`);
+};
 
 //createItem POSTS a new item to the api
+//testBookmark is a test of the function
 
-const createItem = function () {};
+
+const createItem = function (bookmark) {
+  const newBookmark = JSON.stringify({ bookmark });
+  console.log(`We got through createItem to the new bookmark: ${newBookmark}`);
+  return fetch(BASE_URL, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: newBookmark
+  });
+};
 
 //updateItem PATCHES an item within the api
 
