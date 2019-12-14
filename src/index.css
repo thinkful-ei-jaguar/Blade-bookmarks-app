@@ -35,11 +35,11 @@ section {
   justify-content: space-around;
 }
 .add-entry-button {
-  margin-right: 40%;
+  align-self: flex-start;
 }
 
 .filter-button {
-  margin-left: 40%;
+  align-self: flex-end;
 }
 ul {
   flex-direction: column;
