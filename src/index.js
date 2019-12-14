@@ -48,15 +48,16 @@ const main = function () {
     .then(res => res.json())
     .then(res => console.log(res));
   */
-
+  /*
   api.updateItem(id, updateData)
     .then(res => res.json())
     .then(res => console.log(res));  
-  
+  */
   
 
   bookmarkApp.bindEventListeners();
   bookmarkApp.render();
+  console.log('Called render function');
 };
 
 $(main);

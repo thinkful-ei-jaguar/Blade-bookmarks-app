@@ -7,9 +7,28 @@
   <title>Blade's Bookmark App</title>
 </head>
 <body>
-  <ul>
-    <li>Test Test</li>
-    <li>Test Test 2</li>
-  </ul>
+  <form action="./addBookmarkView.html">
+    <section>
+      <h1>My Bookmarks</h1>
+      <div class = 'add-filter-buttons'>
+      <button class = 'add-entry-button' type = 'button'>Add Bookmark</button>
+      <label for="filter-button"></label>
+      <select name="ratings" id="filter-button">
+        <option value="">Filter By Rating</option>
+        <option value="five-star">5 Stars</option>
+        <option value="four-star">4 Stars or more</option>
+        <option value="three-star">3 Stars or more</option>
+        <option value="two-star">2 Stars or more</option>
+        <option value="one-star">1 Star or more</option>
+      </select>
+      </div>
+    </section>
+    <section class = 'bookmarks-section'>
+      <!-- I will have all styling possible done in the .css
+           just not sure how to actually import index.css right now-->
+      <ul style = 'list-style: none;'>
+      </ul>
+    </section>
+  </form>
 </body>
 </html>

@@ -20,12 +20,33 @@ import api from './api';
 //generateBookmarkElement will generate the html for an addition
 //to the bookmark list
 
-const generateBookmarkElement = function () {};
+const generateBookmarkElement = function (element) {
+  return `
+        <li class = 'bookmark-element'>
+          Bookmark #3
+          <span class = 'bookmark-rating'>Rated 5/5</span>
+        </li>
+        <div>
+        <li class = 'bookmark-element'>
+          Bookmark #2
+          <span class = 'bookmark-rating'>Rated 5/5</span>
+        </li>
+        </div>
+        <li class = 'bookmark-element'>
+          Bookmark #1
+          <span class = 'bookmark-rating'>Rated 5/5</span>
+        </li>  
+  `;
+};
 
 //generateBookmarkString will string together each of the 
 //generated html portions to create the entire list of bookmarks
+//Might want to split up each html generation into its own separate
+//function
 
-const generateBookmarkString = function () {};
+const generateBookmarkString = function (bookmarks) {
+  return generateBookmarkElement();
+};
 
 //generateError will create the html to display the error message
 
@@ -43,7 +64,15 @@ const handleCloseError = function () {};
 
 //render is what it sounds like :-)
 
-const render = function () {};
+const render = function () {
+  console.log('Render function fired');
+  let bookmarks = store.bookmarks;
+
+  const bookmarkString = generateBookmarkString(bookmarks);
+
+  $('.bookmarks-section').html(bookmarkString);
+
+};
 
 //handleNewBookmarkSubmit listens for a user to click 'add bookmark'
 
