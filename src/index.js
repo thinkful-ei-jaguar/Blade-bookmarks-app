@@ -29,7 +29,10 @@ const main = function () {
     .then(res => res.json())
     .then(res => console.log(res));
 
-  api.createItem(testBookmark);
+  console.log(`${JSON.stringify(testBookmark)}`);
+  api.createItem(testBookmark)
+    .then(res => res.json())
+    .then(res => console.log(res));
 
   bookmarkApp.bindEventListeners();
   bookmarkApp.render();
