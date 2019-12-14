@@ -36,6 +36,6 @@ const deleteItem = function () {};
 export default {
   getItems,
   createItem,
-  uppdateItem,
+  updateItem,
   deleteItem
 };

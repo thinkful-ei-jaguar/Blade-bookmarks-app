@@ -14,15 +14,13 @@ import bookmarkApp from './bookmark-app';
  * the dom is loaded.
  */
 
- //Fires when the dom is loaded.  This makes the store reflect the server.
- 
-const main = function () {}
+//Fires when the dom is loaded.  This makes the store reflect the server.
 
- function main() {
+const main = function () {
   console.log('DOM is loaded');
 
   const startMsg = $('<p>Webpack is working!</p>');
   $('#root').append(startMsg);
-}
+};
 
 $(main);
