@@ -1,0 +1,63 @@
+/**
+ * This file will contain the local store and
+ * all functions used to interact with the store
+ * locally.  The functions in api.js will call these 
+ * functions after manipulating the actual api.
+ * 
+ * I might need a global variable or two.  I'm 
+ * going to use as few as possible.  Starting off,
+ * the store will be the only 'global.'
+ */
+
+//For now, I'm going to stick a test bookmark here,
+//for any testing with local functions.
+
+const store = {
+  bookmarks: [
+    {
+      id: 'bi420',
+      title: 'Test Title 1',
+      rating: 2,
+      url: 'http://www.yahoo.com',
+      description: 'A LOCAL test object that links to Yahoo',
+      expanded: false
+    }
+  ],
+  adding: false,
+  error: null,
+  filter: 0
+};
+
+//findById will find a bookmark in the store by the id passed in
+
+const findById = function (id) {};
+
+//addItem will add a bookmark to the local store
+
+const addItem = function (bookmark) {
+
+};
+
+//findAndDelete will delete a bookmark from the local store
+
+const findAndDelete = function (id) {};
+
+//findAndUpdate will change a bookmark currently in the local store
+
+const findAndUpdate = function (id, newData) {};
+
+
+//setError will updatte the error in the store to reflect
+//what has been passed in from the api error functions
+
+const setError = function (error) {};
+
+export default {
+  store,
+  findById,
+  addItem,
+  findAndDelete,
+  findAndUpdate,
+  setError
+};
+
