@@ -25,9 +25,10 @@ const getItems = function () {
 
 
 
+
 const createItem = function (bookmark) {
-  const newBookmark = JSON.stringify({ bookmark });
-  console.log(`We got through createItem to the new bookmark: ${newBookmark}`);
+  let newBookmark = JSON.stringify(bookmark);
+  console.log(newBookmark);
   return fetch(BASE_URL, {
     method: 'POST',
     headers: {
@@ -37,13 +38,28 @@ const createItem = function (bookmark) {
   });
 };
 
+ 
+
 //updateItem PATCHES an item within the api
 
-const updateItem = function () {};
+const updateItem = function (id, updateData) {
+  const newData = JSON.stringify(updateData);
+  return fetch(`${BASE_URL}/${id}`, {
+    method: 'PATCH',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: newData
+  });
+};
 
 //deleteItem DELETES a bookmark from the api server
 
-const deleteItem = function () {};
+const deleteItem = function (id) {
+  return fetch(`${BASE_URL}/${id}`, {
+    method: 'DELETE'
+  });
+};
 
 //Need to export all of these api manipulating functions
 
@@ -51,5 +67,6 @@ export default {
   getItems,
   createItem,
   updateItem,
-  deleteItem
+  deleteItem,
+  
 };

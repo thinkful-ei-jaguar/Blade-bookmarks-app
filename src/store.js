@@ -30,21 +30,28 @@ const store = {
 
 //findById will find a bookmark in the store by the id passed in
 
-const findById = function (id) {};
+const findById = function (id) {
+  return this.store.bookmarks.find(currentItem => currentItem.id === id);
+};
 
 //addItem will add a bookmark to the local store
 
 const addItem = function (bookmark) {
-
+  this.store.bookmarks.push(bookmark);
 };
 
 //findAndDelete will delete a bookmark from the local store
 
-const findAndDelete = function (id) {};
+const findAndDelete = function (id) {
+  this.store.bookmarks = this.store.bookmarks.filter(currentItem => currentItem.id !== id);
+};
 
 //findAndUpdate will change a bookmark currently in the local store
 
-const findAndUpdate = function (id, newData) {};
+const findAndUpdate = function (id, newData) {
+  const currentItem = this.findById(id);
+  Object.assign(currentItem, newData);
+};
 
 
 //setError will updatte the error in the store to reflect
