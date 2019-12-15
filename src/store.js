@@ -50,7 +50,9 @@ const findAndUpdate = function (id, newData) {
 //setError will updatte the error in the store to reflect
 //what has been passed in from the api error functions
 
-const setError = function (error) {};
+const setError = function (error) {
+  this.error = error;
+};
 
 export default {
   store,

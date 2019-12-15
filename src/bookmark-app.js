@@ -85,23 +85,35 @@ const generateAddingString = function () {
 
 //generateError will create the html to display the error message
 
-const generateError = function  () {};
+const generateError = function (message) {
+  return `
+    <dialog class = 'error-content' open>
+      <p>${message}</p>
+      <button id='cancel-error'>Okie Dokie</button>
+    </dialog>
+  `;
+};
 
 //renderError checks the store to see if there is an error
 //if there is one, it passes it to generateError
 
-const renderError = function () {};
+const renderError = function () {
+  if (store.store.error) {
+    generateError(store.store.error);    
+  }
+};
 
 //handleCloseError just listens on the error message 
 //for when the user closes it
 
-const handleCloseError = function () {};
+const handleCloseError = function () {
+};
 
 //render is what it sounds like :-)
 
-const render = function (filterValue = 5) {
+const render = function (filterValue = 1) {
   console.log('Render function fired');
-
+  //renderError();
   let bookmarks = store.store.bookmarks;
 
   if (store.store.adding) {
@@ -166,7 +178,12 @@ const handleNewBookmarkSubmit = function () {
         renderError();
         store.store.adding = false;
         render();
+      })
+      .catch((error) => {
+        store.setError(error.message);
+        renderError();
       });
+      
   });
 
 };
@@ -232,7 +249,12 @@ const handleDeleteBookmarkClicked = function () {
         render();
         //I don't like this.  I shouldn't have to do this right?
         location.reload();
+      })
+      .catch((error) => {
+        store.setError(error.message);
+        renderError();
       });
+      
     
     
   });

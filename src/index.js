@@ -21,17 +21,15 @@ import newBookmark from './api';
 const main = function () {
   // eslint-disable-next-line quotes
   api.getItems()
-    .then(res => res.json())
-    .then((res) => {
-      console.log(res);
-      res.forEach((item) => store.addItem(item));
+    .then((items) => {
+      items.forEach((item) => store.addItem(item));
       store.store.bookmarks.forEach((item) => item.expanded = false);
-      bookmarkApp.render();
+      bookmarkApp.render(1);
     });
 
 
   bookmarkApp.bindEventListeners();
-  bookmarkApp.render();
+  bookmarkApp.render(1);
 };
 
 $(main);

@@ -8,7 +8,42 @@ const BASE_URL = 'https://thinkful-list-api.herokuapp.com/Blade/bookmarks';
 //listApiFetch will be our wrapper function for fetch to 
 //standardize our error handling.
 
-const listApiFetch = function (...args) {};
+
+const listApiFetch = function (...args) {
+  // setup var in scope outside of promise chain
+  let error;
+  return fetch(...args)
+    .then(res => {
+      if (!res.ok) {
+        // if response is not 2xx, start building error object
+        error = { code: res.status };
+
+        // if response is not JSON type, place statusText in error object and
+        // immediately reject promise
+        if (!res.headers.get('content-type').includes('json')) {
+          error.message = res.statusText;
+          return Promise.reject(error);
+        }
+      }
+
+      // otherwise, return parsed JSON
+      return res.json();
+    })
+    .then(data => {
+      // if error exists, place the JSON message into the error object and 
+      // reject the Promise with your error object so it lands in the next 
+      // catch.  IMPORTANT: Check how the API sends errors -- not all APIs
+      // will respond with a JSON object containing message key
+      if (error) {
+        error.message = data.message;
+        return Promise.reject(error);
+      }
+
+      // otherwise, return the json as normal resolved Promise
+      return data;
+    });
+};
+
 
 /** 
  * Now we need 4 ways to communicate with the API.
@@ -20,7 +55,7 @@ const listApiFetch = function (...args) {};
 //getItems simply GETS the api server (api store) state
 
 const getItems = function () {
-  return fetch(BASE_URL);
+  return listApiFetch(BASE_URL);
 };
 
 //createItem POSTS a new item to the api
@@ -31,7 +66,7 @@ const getItems = function () {
 const createItem = function (bookmark) {
   let newBookmark = JSON.stringify(bookmark);
   console.log(newBookmark);
-  return fetch(BASE_URL, {
+  return listApiFetch(BASE_URL, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json'
@@ -46,7 +81,7 @@ const createItem = function (bookmark) {
 
 const updateItem = function (id, updateData) {
   const newData = JSON.stringify(updateData);
-  return fetch(`${BASE_URL}/${id}`, {
+  return listApiFetch(`${BASE_URL}/${id}`, {
     method: 'PATCH',
     headers: {
       'Content-Type': 'application/json',
@@ -58,7 +93,7 @@ const updateItem = function (id, updateData) {
 //deleteItem DELETES a bookmark from the api server
 
 const deleteItem = function (id) {
-  return fetch(`${BASE_URL}/${id}`, {
+  return listApiFetch(`${BASE_URL}/${id}`, {
     method: 'DELETE'
   });
 };
