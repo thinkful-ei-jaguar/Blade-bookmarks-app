@@ -37,10 +37,10 @@ const listApiFetch = function (...args) {
       // will respond with a JSON object containing message key
       if (error) {
         error.message = data.message;
-        console.log(error.message);
+        
         store.store.error = error.message;
-        console.log(store.store.error);
         bookmarkApp.renderError();
+        
         return Promise.reject(error);
       }
 
