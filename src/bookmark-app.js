@@ -15,12 +15,16 @@ import $ from 'jquery';
 
 import store from './store';
 import api from './api';
+import { filter } from 'minimatch';
 
 
 //generateBookmarkElement will generate the html for an addition
 //to the bookmark list
 
-const generateBookmarkElement = function (element) {
+const generateBookmarkElement = function (element, filterValue) {
+  if (element.rating < filterValue) {
+    return '';
+  }
   if (element.expanded) {
     return `
         <li class = 'bookmark-element' data-item-id="${element.id}">
@@ -49,8 +53,8 @@ const generateBookmarkElement = function (element) {
 //Might want to split up each html generation into its own separate
 //function.  Yep, having to do that with the adding view.
 
-const generateBookmarkString = function (bookmarkList) {
-  const bookmarks = bookmarkList.map((item) => generateBookmarkElement(item));
+const generateBookmarkString = function (bookmarkList, filterValue) {
+  const bookmarks = bookmarkList.map((item) => generateBookmarkElement(item, filterValue));
   return bookmarks.join('');
 };
 
@@ -59,9 +63,9 @@ const generateBookmarkString = function (bookmarkList) {
 const generateAddingString = function () {
   let addingString = `
   <label for="new-bookmark-name">Enter a new bookmark here:</label>
-      <input type="text" name = "new-bookmark-name" id = "new-bookmark-name" placeholder = "New bookmark name">
-      <label for="new-bookmark-url">Enter the URL:</label>
-      <input type="text" name = "new-bookmark-url" id = "new-bookmark-url" placeholder = "https://www.example.com">
+      <input type="text" name = "new-bookmark-name" id = "new-bookmark-name" placeholder = "New bookmark name" required>
+      <label for="new-bookmark-url">Enter the URL.  Please include the https://</label>
+      <input type="text" name = "new-bookmark-url" id = "new-bookmark-url" placeholder = "https://www.example.com" required>
       <select name="ratings" id="rating-dropdown">
           <option value="">Select a Rating</option>
           <option value="5">5 Stars</option>
@@ -95,7 +99,7 @@ const handleCloseError = function () {};
 
 //render is what it sounds like :-)
 
-const render = function () {
+const render = function (filterValue = 5) {
   console.log('Render function fired');
 
   let bookmarks = store.store.bookmarks;
@@ -104,7 +108,7 @@ const render = function () {
     return generateAddingString();
   } 
 
-  const bookmarkString = generateBookmarkString(bookmarks);
+  const bookmarkString = generateBookmarkString(bookmarks, filterValue);
 
   $('.bookmarks-section').html(bookmarkString);
 
@@ -176,6 +180,18 @@ const getItemIdFromElement = function (item) {
     .data('item-id');  
 };
 
+//handleRatingsDropdown will update the view of the bookmarks to reflect
+//the filter chosen by the user
+
+const handleRatingsDropdown = function () {
+  $('body').on('change', '#filter-button', function (event) {
+    event.preventDefault();
+    const filterValue = parseInt($('#filter-button').val());
+    render(filterValue);
+  });  
+};
+
+
 //handleExpandBookmark will change to expanded view and back when item
 //is clicked
 
@@ -201,18 +217,23 @@ const handleExpandBookmark = function () {
 //handleDeleteBookmarkClicked will listen for when a user deletes
 //a bookmark item
 
-//This doesn't work yet
+//This doesn't work right yet.  It is functional but
+//has to use location.reload(), which in my mind isn't right.
 const handleDeleteBookmarkClicked = function () {
   $('form').on('click', '.delete-bookmark-button', function (event) {
+    console.log('Delete button clicked');
     event.preventDefault();
     const id = getItemIdFromElement(event.currentTarget);
     api.deleteItem(id)
       .then(res => res.json)
+      .then(res => store.findAndDelete(res))
+      .then(res => api.getItems())
       .then(res => {
-        store.findAndDelete(res);
-        api.getItems();
         render();
+        //I don't like this.  I shouldn't have to do this right?
+        location.reload();
       });
+    
     
   });
 };
@@ -232,6 +253,7 @@ const bindEventListeners = function () {
   handleEditBookmarkSubmit();
   handleExpandBookmark();
   handleCloseError();
+  handleRatingsDropdown();
 };
 
 export default {

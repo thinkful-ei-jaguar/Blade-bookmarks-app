@@ -16,18 +16,6 @@ import newBookmark from './api';
  */
 
 //Fires when the dom is loaded.  This makes the store reflect the server.
-const testBookmark = {
-  title: "not youtube",
-  url: "https://www.youtube.com"
-};
-
-const updateData = {
-  title: "definitely not not youtube",
-  url: "https://www.google.com"
-};
-
-
-let id = "ck464zl5o00070kz1g2ttxfue";
 
 
 const main = function () {
@@ -37,6 +25,7 @@ const main = function () {
     .then((res) => {
       console.log(res);
       res.forEach((item) => store.addItem(item));
+      store.store.bookmarks.forEach((item) => item.expanded = false);
       bookmarkApp.render();
     });
 

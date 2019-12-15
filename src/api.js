@@ -1,3 +1,5 @@
+import bookmarkApp from "./bookmark-app";
+
 //This will be our base api url that we append specific queries to
 const BASE_URL = 'https://thinkful-list-api.herokuapp.com/Blade/bookmarks';
 
