@@ -35,25 +35,13 @@ const main = function () {
   console.log("It's alive!!!!");
   api.getItems()
     .then(res => res.json())
-    .then(res => console.log(res));
-  
-  /*
-  api.createItem(testBookmark)
-    .then(res => res.json())
-    .then(res => console.log(res));
-  
-  */
-  /*
-  api.deleteItem(id)
-    .then(res => res.json())
-    .then(res => console.log(res));
-  */
-  /*
-  api.updateItem(id, updateData)
-    .then(res => res.json())
-    .then(res => console.log(res));  
-  */
-  
+    .then((res) => {
+      console.log(res);
+      res.forEach((item) => store.addItem(item));
+      bookmarkApp.render();
+
+    });
+
 
   bookmarkApp.bindEventListeners();
   bookmarkApp.render();

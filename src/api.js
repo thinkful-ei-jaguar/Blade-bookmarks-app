@@ -18,7 +18,7 @@ const listApiFetch = function (...args) {};
 //getItems simply GETS the api server (api store) state
 
 const getItems = function () {
-  return fetch(`${BASE_URL}`);
+  return fetch(BASE_URL);
 };
 
 //createItem POSTS a new item to the api

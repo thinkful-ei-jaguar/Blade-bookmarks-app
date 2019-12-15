@@ -96,6 +96,7 @@ const handleCloseError = function () {};
 
 const render = function () {
   console.log('Render function fired');
+  Object.assign(store.store.bookmarks, api.getItems);
   let bookmarks = store.store.bookmarks;
 
   if (store.store.adding) {
@@ -167,6 +168,7 @@ const handleNewBookmarkSubmit = function () {
 
 //getItemIdFromElement returns .data about an item...will have to return to this one
 
+//This doesn't work yet
 const getItemIdFromElement = function (item) {
   return $(item)
     .closest('.bookmark-element')
@@ -176,6 +178,7 @@ const getItemIdFromElement = function (item) {
 //handleDeleteBookmarkClicked will listen for when a user deletes
 //a bookmark item
 
+//This doesn't work yet
 const handleDeleteBookmarkClicked = function () {
   $('form').on('click', '.delete-bookmark-button', function (event) {
     event.preventDefault();
