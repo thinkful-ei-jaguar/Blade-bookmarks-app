@@ -1,4 +1,6 @@
 import bookmarkApp from "./bookmark-app";
+import store from "./store";
+
 
 //This will be our base api url that we append specific queries to
 const BASE_URL = 'https://thinkful-list-api.herokuapp.com/Blade/bookmarks';
@@ -17,7 +19,6 @@ const listApiFetch = function (...args) {
       if (!res.ok) {
         // if response is not 2xx, start building error object
         error = { code: res.status };
-
         // if response is not JSON type, place statusText in error object and
         // immediately reject promise
         if (!res.headers.get('content-type').includes('json')) {
@@ -36,6 +37,10 @@ const listApiFetch = function (...args) {
       // will respond with a JSON object containing message key
       if (error) {
         error.message = data.message;
+        console.log(error.message);
+        store.store.error = error.message;
+        console.log(store.store.error);
+        bookmarkApp.renderError();
         return Promise.reject(error);
       }
 

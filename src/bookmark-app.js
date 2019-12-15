@@ -86,12 +86,13 @@ const generateAddingString = function () {
 //generateError will create the html to display the error message
 
 const generateError = function (message) {
-  return `
-    <dialog class = 'error-content' open>
+  let errorMessage = `
+  <dialog class = 'error-content' open>
       <p>${message}</p>
       <button id='cancel-error'>Okie Dokie</button>
     </dialog>
   `;
+  $('.bookmarks-section').append(errorMessage);
 };
 
 //renderError checks the store to see if there is an error
