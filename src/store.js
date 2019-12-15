@@ -19,7 +19,7 @@ const store = {
       title: 'Test Title 1',
       rating: 2,
       url: 'http://www.yahoo.com',
-      description: 'A LOCAL test object that links to Yahoo',
+      desc: 'A LOCAL test object that links to Yahoo',
       expanded: true
     },
     {
@@ -27,7 +27,7 @@ const store = {
       title: 'Definitely not Yahoo',
       rating: 5,
       url: 'http://www.yahoo.com',
-      description: 'A LOCAL test object that links to Yahoo',
+      desc: 'A LOCAL test object that links to Yahoo',
       expanded: true
     }
   ],

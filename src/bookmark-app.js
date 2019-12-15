@@ -124,6 +124,14 @@ const handleNewBookmarkClick = function () {
 //new bookmark info
 
 const handleNewBookmarkSubmit = function () {
+  $('.bookmarks-section').off('click').on('click', '.cancel-new-bookmark', function (event) {
+    event.preventDefault();
+    store.store.adding = false;
+    render();
+  });
+  
+
+
   $('.bookmarks-section').off('click').on('click', '.create-new-bookmark', function (event) {
     event.preventDefault();
     let newBookmarkName = $('#new-bookmark-name').val();
@@ -159,12 +167,22 @@ const handleNewBookmarkSubmit = function () {
 
 //getItemIdFromElement returns .data about an item...will have to return to this one
 
-const getItemIdFromElement = function () {};
+const getItemIdFromElement = function (item) {
+  return $(item)
+    .closest('.bookmark-element')
+    .data('item-id');  
+};
 
 //handleDeleteBookmarkClicked will listen for when a user deletes
 //a bookmark item
 
-const handleDeleteBookmarkClicked = function () {};
+const handleDeleteBookmarkClicked = function () {
+  $('form').on('click', '.delete-bookmark-button', function (event) {
+    event.preventDefault();
+    const id = getItemIdFromElement(event.currentTarget);
+    console.log(id);
+  });
+};
 
 //handleEditBookmarkSubmit will listen for when a user wants to
 //edit a bookmark item
