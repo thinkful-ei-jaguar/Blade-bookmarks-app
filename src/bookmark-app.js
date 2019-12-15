@@ -111,7 +111,7 @@ const render = function () {
 //handleNewBookmarkClick listens for a user to click 'add bookmark'
 
 const handleNewBookmarkClick = function () {
-  $('body').on('click', '.add-entry-button', function (event) {
+  $('form').on('click', '.add-entry-button', function (event) {
     event.preventDefault();
     console.log('Add bookmark button clicked');
     store.store.adding = true;
@@ -124,7 +124,7 @@ const handleNewBookmarkClick = function () {
 //new bookmark info
 
 const handleNewBookmarkSubmit = function () {
-  $('body').on('click', '.create-new-bookmark', function () {
+  $('.bookmarks-section').off('click').on('click', '.create-new-bookmark', function (event) {
     event.preventDefault();
     let newBookmarkName = $('#new-bookmark-name').val();
     console.log(newBookmarkName);
@@ -138,7 +138,23 @@ const handleNewBookmarkSubmit = function () {
     let newDescription = $('#new-bookmark-description').val();
     console.log(newDescription);
 
+    const newBookmarkEntry = {
+      title: newBookmarkName,
+      url: newUrlName,
+      desc: newDescription,
+      rating: newRating
+    };
+    
+    api.createItem(newBookmarkEntry)
+      .then(res => res.json())
+      .then((newItem) => {
+        store.addItem(newItem);
+        renderError();
+        store.store.adding = false;
+        render();
+      });
   });
+
 };
 
 //getItemIdFromElement returns .data about an item...will have to return to this one
