@@ -32,20 +32,17 @@ let id = "ck464zl5o00070kz1g2ttxfue";
 
 const main = function () {
   // eslint-disable-next-line quotes
-  console.log("It's alive!!!!");
   api.getItems()
     .then(res => res.json())
     .then((res) => {
       console.log(res);
       res.forEach((item) => store.addItem(item));
       bookmarkApp.render();
-
     });
 
 
   bookmarkApp.bindEventListeners();
   bookmarkApp.render();
-  console.log('Called render function');
 };
 
 $(main);

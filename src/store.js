@@ -13,24 +13,8 @@
 //for any testing with local functions.
 
 const store = {
-  bookmarks: [
-    {
-      id: 'bi420',
-      title: 'Test Title 1',
-      rating: 2,
-      url: 'http://www.yahoo.com',
-      desc: 'A LOCAL test object that links to Yahoo',
-      expanded: true
-    },
-    {
-      id: 'bi420',
-      title: 'Definitely not Yahoo',
-      rating: 5,
-      url: 'http://www.yahoo.com',
-      desc: 'A LOCAL test object that links to Yahoo',
-      expanded: true
-    }
-  ],
+  bookmarks:
+  [],
   adding: false,
   error: null,
   filter: 0
@@ -45,6 +29,7 @@ const findById = function (id) {
 //addItem will add a bookmark to the local store
 
 const addItem = function (bookmark) {
+  bookmark.expanded = false;
   this.store.bookmarks.push(bookmark);
 };
 

@@ -23,20 +23,21 @@ import api from './api';
 const generateBookmarkElement = function (element) {
   if (element.expanded) {
     return `
-        <li class = 'bookmark-element'>
+        <li class = 'bookmark-element' data-item-id="${element.id}">
           ${element.title}
           <span class = 'bookmark-rating'>Rated ${element.rating}/5</span>
-        </li>
-        <div class = 'visit-delete-bookmark'></div>
           <button class = 'visit-bookmark-button'>Visit Site</button>
           <button class = 'delete-bookmark-button'>Delete Bookmark?</button>
-       </div>
-       <p>Description:  This will be the description that the user can enter for a particular bookmark.  It will only be visible when this item is clicked on.</p>
+        </li>
+        
+          
+    
+       <p>Description:  ${element.desc}</p>
   `;
   } else {
   
     return `
-        <li class = 'bookmark-element'>
+        <li class = 'bookmark-element' data-item-id="${element.id}">
           ${element.title}
           <span class = 'bookmark-rating'>Rated ${element.rating}/5</span>
         </li>
@@ -96,7 +97,7 @@ const handleCloseError = function () {};
 
 const render = function () {
   console.log('Render function fired');
-  Object.assign(store.store.bookmarks, api.getItems);
+
   let bookmarks = store.store.bookmarks;
 
   if (store.store.adding) {
@@ -168,11 +169,33 @@ const handleNewBookmarkSubmit = function () {
 
 //getItemIdFromElement returns .data about an item...will have to return to this one
 
-//This doesn't work yet
+
 const getItemIdFromElement = function (item) {
   return $(item)
     .closest('.bookmark-element')
     .data('item-id');  
+};
+
+//handleExpandBookmark will change to expanded view and back when item
+//is clicked
+
+const handleExpandBookmark = function () {
+  $('body').on('click', 'li.bookmark-element', function (event) {
+    if (event.target !== this) {
+      return;
+    }
+    event.preventDefault();
+    event.stopPropagation();
+    console.log('You clicked a list item');
+    const id = getItemIdFromElement(event.currentTarget);
+    console.log(id);
+    store.store.bookmarks.forEach(element => {
+      if (element.id === id) {
+        element.expanded = !element.expanded;
+        return render();
+      }
+    });
+  });
 };
 
 //handleDeleteBookmarkClicked will listen for when a user deletes
@@ -183,7 +206,14 @@ const handleDeleteBookmarkClicked = function () {
   $('form').on('click', '.delete-bookmark-button', function (event) {
     event.preventDefault();
     const id = getItemIdFromElement(event.currentTarget);
-    console.log(id);
+    api.deleteItem(id)
+      .then(res => res.json)
+      .then(res => {
+        store.findAndDelete(res);
+        api.getItems();
+        render();
+      });
+    
   });
 };
 
@@ -200,6 +230,7 @@ const bindEventListeners = function () {
   handleNewBookmarkClick();
   handleDeleteBookmarkClicked();
   handleEditBookmarkSubmit();
+  handleExpandBookmark();
   handleCloseError();
 };
 
