@@ -20,10 +20,18 @@ const store = {
       rating: 2,
       url: 'http://www.yahoo.com',
       description: 'A LOCAL test object that links to Yahoo',
-      expanded: false
+      expanded: true
+    },
+    {
+      id: 'bi420',
+      title: 'Definitely not Yahoo',
+      rating: 5,
+      url: 'http://www.yahoo.com',
+      description: 'A LOCAL test object that links to Yahoo',
+      expanded: true
     }
   ],
-  adding: false,
+  adding: true,
   error: null,
   filter: 0
 };

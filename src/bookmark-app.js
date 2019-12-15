@@ -21,22 +21,26 @@ import api from './api';
 //to the bookmark list
 
 const generateBookmarkElement = function (element) {
-  return `
+  if (element.expanded) {
+    return `
         <li class = 'bookmark-element'>
-          Bookmark #3
-          <span class = 'bookmark-rating'>Rated 5/5</span>
+          ${element.title}
+          <span class = 'bookmark-rating'>Rated ${element.rating}/5</span>
         </li>
-        <div>
-        <li class = 'bookmark-element'>
-          Bookmark #2
-          <span class = 'bookmark-rating'>Rated 5/5</span>
-        </li>
-        </div>
-        <li class = 'bookmark-element'>
-          Bookmark #1
-          <span class = 'bookmark-rating'>Rated 5/5</span>
-        </li>  
+        <div class = 'visit-delete-bookmark'></div>
+          <button class = 'visit-bookmark-button'>Visit Site</button>
+          <button class = 'delete-bookmark-button'>Delete Bookmark?</button>
+       </div>
+       <p>Description:  This will be the description that the user can enter for a particular bookmark.  It will only be visible when this item is clicked on.</p>
   `;
+  } else {
+  
+    return `
+        <li class = 'bookmark-element'>
+          ${element.title}
+          <span class = 'bookmark-rating'>Rated ${element.rating}/5</span>
+        </li>
+  `;}
 };
 
 //generateBookmarkString will string together each of the 
@@ -44,8 +48,34 @@ const generateBookmarkElement = function (element) {
 //Might want to split up each html generation into its own separate
 //function
 
-const generateBookmarkString = function (bookmarks) {
-  return generateBookmarkElement();
+const generateBookmarkString = function (bookmarkList) {
+  const bookmarks = bookmarkList.map((item) => generateBookmarkElement(item));
+  return bookmarks.join('');
+};
+
+//generateExpandedString will generate an html string for the expanded view
+
+const generateAddingString = function () {
+  let addingString = `
+  <label for="new-bookmark-name">Enter a new bookmark here:</label>
+      <input type="text" name = "new-bookmark-name" id = "new-bookmark-name" placeholder = "New bookmark name">
+      <label for="new-bookmark-url">Enter the URL:</label>
+      <input type="text" name = "new-bookmark-url" id = "new-bookmark-url" placeholder = "https://www.example.com">
+      <select name="ratings" id="filter-button">
+          <option value="">Select a Rating</option>
+          <option value="five-star">5 Stars</option>
+          <option value="four-star">4 Stars</option>
+          <option value="three-star">3 Stars</option>
+          <option value="two-star">2 Stars</option>
+          <option value="one-star">1 Star</option>
+        </select>
+      <label for="new-bookmark-description">Enter a description for the bookmark:</label>
+      <textarea name="new-bookmark-description" id="new-bookmark-description" cols="40" rows="10" placeholder="Enter your description here"></textarea>
+      <button class = 'cancel-new-bookmark'>Create</button>
+      <button class = 'create-new-bookmark'>Cancel</button>
+      `;
+
+  $('.bookmarks-section').html(addingString);
 };
 
 //generateError will create the html to display the error message
@@ -66,7 +96,11 @@ const handleCloseError = function () {};
 
 const render = function () {
   console.log('Render function fired');
-  let bookmarks = store.bookmarks;
+  let bookmarks = store.store.bookmarks;
+
+  if (store.store.adding) {
+    return generateAddingString();
+  } 
 
   const bookmarkString = generateBookmarkString(bookmarks);
 
