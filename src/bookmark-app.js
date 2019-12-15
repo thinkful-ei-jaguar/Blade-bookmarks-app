@@ -30,7 +30,7 @@ const generateBookmarkElement = function (element, filterValue) {
         <li class = 'bookmark-element' data-item-id="${element.id}">
           ${element.title}
           <span class = 'bookmark-rating'>Rated ${element.rating}/5</span>
-          <button class = 'visit-bookmark-button'>Visit Site</button>
+          <a href = '${element.url}' target = "_blank">${element.url}</a>
           <button class = 'delete-bookmark-button'>Delete Bookmark?</button>
         </li>
         
@@ -58,14 +58,14 @@ const generateBookmarkString = function (bookmarkList, filterValue) {
   return bookmarks.join('');
 };
 
-//generateExpandedString will generate an html string for the expanded view
+//generateAddingString will generate an html string for the adding a bookmark view
 
 const generateAddingString = function () {
   let addingString = `
   <label for="new-bookmark-name">Enter a new bookmark here:</label>
-      <input type="text" name = "new-bookmark-name" id = "new-bookmark-name" placeholder = "New bookmark name" required>
+      <input type="text" name = "new-bookmark-name" id = "new-bookmark-name" placeholder = "New bookmark name">
       <label for="new-bookmark-url">Enter the URL.  Please include the https://</label>
-      <input type="text" name = "new-bookmark-url" id = "new-bookmark-url" placeholder = "https://www.example.com" required>
+      <input type="text" name = "new-bookmark-url" id = "new-bookmark-url" placeholder = "https://www.example.com">
       <select name="ratings" id="rating-dropdown">
           <option value="">Select a Rating</option>
           <option value="5">5 Stars</option>
@@ -113,7 +113,7 @@ const handleCloseError = function () {
 
 const render = function (filterValue = 1) {
   console.log('Render function fired');
-  //renderError();
+  renderError();
   let bookmarks = store.store.bookmarks;
 
   if (store.store.adding) {
