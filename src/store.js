@@ -31,7 +31,7 @@ const store = {
       expanded: true
     }
   ],
-  adding: true,
+  adding: false,
   error: null,
   filter: 0
 };

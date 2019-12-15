@@ -46,7 +46,7 @@ const generateBookmarkElement = function (element) {
 //generateBookmarkString will string together each of the 
 //generated html portions to create the entire list of bookmarks
 //Might want to split up each html generation into its own separate
-//function
+//function.  Yep, having to do that with the adding view.
 
 const generateBookmarkString = function (bookmarkList) {
   const bookmarks = bookmarkList.map((item) => generateBookmarkElement(item));
@@ -61,18 +61,18 @@ const generateAddingString = function () {
       <input type="text" name = "new-bookmark-name" id = "new-bookmark-name" placeholder = "New bookmark name">
       <label for="new-bookmark-url">Enter the URL:</label>
       <input type="text" name = "new-bookmark-url" id = "new-bookmark-url" placeholder = "https://www.example.com">
-      <select name="ratings" id="filter-button">
+      <select name="ratings" id="rating-dropdown">
           <option value="">Select a Rating</option>
-          <option value="five-star">5 Stars</option>
-          <option value="four-star">4 Stars</option>
-          <option value="three-star">3 Stars</option>
-          <option value="two-star">2 Stars</option>
-          <option value="one-star">1 Star</option>
+          <option value="5">5 Stars</option>
+          <option value="4">4 Stars</option>
+          <option value="3">3 Stars</option>
+          <option value="2">2 Stars</option>
+          <option value="1">1 Star</option>
         </select>
       <label for="new-bookmark-description">Enter a description for the bookmark:</label>
       <textarea name="new-bookmark-description" id="new-bookmark-description" cols="40" rows="10" placeholder="Enter your description here"></textarea>
-      <button class = 'cancel-new-bookmark'>Create</button>
-      <button class = 'create-new-bookmark'>Cancel</button>
+      <button class = 'create-new-bookmark'>Create</button>
+      <button class = 'cancel-new-bookmark'>Cancel</button>
       `;
 
   $('.bookmarks-section').html(addingString);
@@ -108,9 +108,38 @@ const render = function () {
 
 };
 
-//handleNewBookmarkSubmit listens for a user to click 'add bookmark'
+//handleNewBookmarkClick listens for a user to click 'add bookmark'
 
-const handleNewBookmarkSubmit = function () {};
+const handleNewBookmarkClick = function () {
+  $('body').on('click', '.add-entry-button', function (event) {
+    event.preventDefault();
+    console.log('Add bookmark button clicked');
+    store.store.adding = true;
+    handleNewBookmarkSubmit();
+    render();
+  });
+};
+
+//handleNewBookmarkSubmit listens for a user to click 'create' after filling out a
+//new bookmark info
+
+const handleNewBookmarkSubmit = function () {
+  $('body').on('click', '.create-new-bookmark', function () {
+    event.preventDefault();
+    let newBookmarkName = $('#new-bookmark-name').val();
+    console.log(newBookmarkName);
+
+    let newUrlName = $('#new-bookmark-url').val();
+    console.log(newUrlName);
+  
+    let newRating = parseInt($('#rating-dropdown').val());
+    console.log(newRating);
+
+    let newDescription = $('#new-bookmark-description').val();
+    console.log(newDescription);
+
+  });
+};
 
 //getItemIdFromElement returns .data about an item...will have to return to this one
 
@@ -131,6 +160,7 @@ const handleEditBookmarkSubmit = function () {};
 
 const bindEventListeners = function () {
   handleNewBookmarkSubmit();
+  handleNewBookmarkClick();
   handleDeleteBookmarkClicked();
   handleEditBookmarkSubmit();
   handleCloseError();
