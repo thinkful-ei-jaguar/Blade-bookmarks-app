@@ -53,19 +53,44 @@ const generateBookmarkElement = function (element, filterValue) {
 //Might want to split up each html generation into its own separate
 //function.  Yep, having to do that with the adding view.
 
+const generateAddFilterString = function () {
+  return `
+  <section>
+      <h1>My Bookmarks</h1>
+      <div class = 'add-filter-buttons'>
+      <button class = 'add-entry-button' type = 'button'>Add Bookmark</button>
+      <label for="filter-button"></label>
+      <select name="ratings" id="filter-button">
+        <option value="1">Filter By Rating</option>
+        <option value="5">5 Stars</option>
+        <option value="4">4 Stars or more</option>
+        <option value="3">3 Stars or more</option>
+        <option value="2">2 Stars or more</option>
+        <option value="1">1 Star or more</option>
+      </select>
+      </div>
+    </section>  
+  `;
+};
+
+
 const generateBookmarkString = function (bookmarkList, filterValue) {
   const bookmarks = bookmarkList.map((item) => generateBookmarkElement(item, filterValue));
-  return bookmarks.join('');
+  
+  const addFilter = generateAddFilterString();
+  return addFilter + bookmarks.join('');
 };
 
 //generateAddingString will generate an html string for the adding a bookmark view
 
 const generateAddingString = function () {
   let addingString = `
+  <p></p>
+  <p></p>
   <label for="new-bookmark-name">Enter a new bookmark here:</label>
-      <input type="text" name = "new-bookmark-name" id = "new-bookmark-name" placeholder = "New bookmark name">
+      <input type="text" name = "new-bookmark-name" id = "new-bookmark-name" placeholder = "New bookmark name" required>
       <label for="new-bookmark-url">Enter the URL.  Please include the https://</label>
-      <input type="text" name = "new-bookmark-url" id = "new-bookmark-url" placeholder = "https://www.example.com">
+      <input type="url" name = "new-bookmark-url" id = "new-bookmark-url" placeholder = "https://www.example.com" pattern = "https://.*" required>
       <select name="ratings" id="rating-dropdown">
           <option value="5">5 Stars</option>
           <option value="4">4 Stars</option>
@@ -75,8 +100,8 @@ const generateAddingString = function () {
         </select>
       <label for="new-bookmark-description">Enter a description for the bookmark:</label>
       <textarea name="new-bookmark-description" id="new-bookmark-description" cols="40" rows="10" placeholder="Enter your description here"></textarea>
-      <button class = 'create-new-bookmark'>Create New Bookmark</button>
-      <button class = 'cancel-new-bookmark'>I'm Done Creating Bookmarks</button>
+      <button class = 'create-new-bookmark' type = 'submit'>Create New Bookmark</button>
+      <button class = 'cancel-new-bookmark' type = 'reset'>I'm Done Creating Bookmarks</button>
       `;
 
   $('.bookmarks-section').html(addingString);
@@ -122,13 +147,12 @@ const render = function (filterValue = 1) {
   renderError();
   let bookmarks = store.store.bookmarks;
 
-  if (store.store.adding) {
+  if (store.store.adding === true) {
     return generateAddingString();
-  } 
-
-  const bookmarkString = generateBookmarkString(bookmarks, filterValue);
-
-  $('.bookmarks-section').html(bookmarkString);
+  } else { 
+    const bookmarkString = generateBookmarkString(bookmarks, filterValue);
+    $('.bookmarks-section').html(bookmarkString);
+  }
 
 };
 
@@ -148,16 +172,18 @@ const handleNewBookmarkClick = function () {
 //new bookmark info
 
 const handleNewBookmarkSubmit = function () {
-  $('.bookmarks-section').off('click').on('click', '.cancel-new-bookmark', function (event) {
+  $('form').on('click', '.cancel-new-bookmark', function (event) {
     event.preventDefault();
     store.store.adding = false;
-    render();
+    return render();
   });
   
 
 
-  $('.bookmarks-section').off('click').on('click', '.create-new-bookmark', function (event) {
+  $('section.bookmarks-section').on('click', 'button.create-new-bookmark', function (event) {
     event.preventDefault();
+    event.stopPropagation();
+    console.log('Create new bookmark clicked');
     let newBookmarkName = $('#new-bookmark-name').val();
     console.log(newBookmarkName);
 
@@ -179,17 +205,17 @@ const handleNewBookmarkSubmit = function () {
     
     api.createItem(newBookmarkEntry)
       .then(res => res.json())
-      .then((newItem) => {
-        store.addItem(newItem);
-        renderError();
+      .then(() => {
+        store.addItem(newBookmarkEntry);  
+      })
+      .then (() => {
         store.store.adding = false;
         render();
       })
       .catch((error) => {
         store.setError(error.message);
-        renderError();
+        //renderError();
       });
-      
   });
 
 };

@@ -31,6 +31,7 @@ const findById = function (id) {
 const addItem = function (bookmark) {
   bookmark.expanded = false;
   this.store.bookmarks.push(bookmark);
+  
 };
 
 //findAndDelete will delete a bookmark from the local store

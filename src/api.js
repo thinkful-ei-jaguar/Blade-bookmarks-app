@@ -38,9 +38,12 @@ const listApiFetch = function (...args) {
       if (error) {
         error.message = data.message;
         
+        /*
         store.store.error = error.message;
+        console.log(store.store.error);
         bookmarkApp.renderError();
-        
+        */
+       
         return Promise.reject(error);
       }
 
