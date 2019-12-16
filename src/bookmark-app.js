@@ -28,15 +28,16 @@ const generateBookmarkElement = function (element, filterValue) {
   if (element.expanded) {
     return `
         <li class = 'bookmark-element' data-item-id="${element.id}">
-          ${element.title}
-          <span class = 'bookmark-rating'>Rated ${element.rating}/5</span>
+          ${element.title}                  
+          Rated ${element.rating}/5
           <a href = '${element.url}' target = "_blank">${element.url}</a>
           <button class = 'delete-bookmark-button'>Delete Bookmark?</button>
+          <p>Description:  ${element.desc}</p>
         </li>
         
           
     
-       <p>Description:  ${element.desc}</p>
+       
   `;
   } else {
   
