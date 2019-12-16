@@ -8,8 +8,8 @@ body {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  margin-left: 10%;
-  margin-right: 10%;
+  margin-left: 11%;
+  margin-right: 11%;
   border: 1px solid black;
 }
 
@@ -28,7 +28,7 @@ section {
   justify-content: center;
   align-items: stretch;
 }
-
+/* yep */
 .add-filter-buttons {
   display: flex;
   flex-direction: row;
