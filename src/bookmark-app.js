@@ -87,6 +87,7 @@ const generateAddingString = function () {
   let addingString = `
   <p></p>
   <p></p>
+  <h1>My Bookmarks</h1>
   <label for="new-bookmark-name">Enter a new bookmark here:</label>
       <input type="text" name = "new-bookmark-name" id = "new-bookmark-name" placeholder = "New bookmark name" required>
       <label for="new-bookmark-url">Enter the URL.  Please include the https://</label>
@@ -103,8 +104,8 @@ const generateAddingString = function () {
       <button class = 'create-new-bookmark' type = 'submit'>Create New Bookmark</button>
       <button class = 'cancel-new-bookmark' type = 'reset'>I'm Done Creating Bookmarks</button>
       `;
-
-  $('.bookmarks-section').html(addingString);
+  $('.bookmarks-section').html('');
+  $('#bookmarks-form').html(addingString);
 };
 
 //generateError will create the html to display the error message
@@ -145,12 +146,14 @@ const handleCloseError = function () {
 const render = function (filterValue = 1) {
   console.log('Render function fired');
   renderError();
+
   let bookmarks = store.store.bookmarks;
 
   if (store.store.adding === true) {
     return generateAddingString();
   } else { 
     const bookmarkString = generateBookmarkString(bookmarks, filterValue);
+    $('#bookmarks-form').html('');
     $('.bookmarks-section').html(bookmarkString);
   }
 
@@ -159,31 +162,39 @@ const render = function (filterValue = 1) {
 //handleNewBookmarkClick listens for a user to click 'add bookmark'
 
 const handleNewBookmarkClick = function () {
-  $('form').on('click', '.add-entry-button', function (event) {
+  $('body').on('click', '.add-entry-button', function (event) {
     event.preventDefault();
     console.log('Add bookmark button clicked');
     store.store.adding = true;
-    handleNewBookmarkSubmit();
+  
     render();
   });
 };
+
+
+//handleNewBookmarkCancel listens for a user to click 'cancel' if they are done
+//adding bookmarks or wish to discard the current one
+
+const handleNewBookmarkCancel = function () {
+  $('form#bookmarks-form').on('click', '.cancel-new-bookmark', function (event) {
+    event.preventDefault();
+    store.store.adding = false;
+    return render();
+  });
+};
+
 
 //handleNewBookmarkSubmit listens for a user to click 'create' after filling out a
 //new bookmark info
 
 const handleNewBookmarkSubmit = function () {
-  $('form').on('click', '.cancel-new-bookmark', function (event) {
-    event.preventDefault();
-    store.store.adding = false;
-    return render();
-  });
-  
 
 
-  $('section.bookmarks-section').on('click', 'button.create-new-bookmark', function (event) {
+  $('#bookmarks-form').on('submit', function (event) {
     event.preventDefault();
-    event.stopPropagation();
+
     console.log('Create new bookmark clicked');
+
     let newBookmarkName = $('#new-bookmark-name').val();
     console.log(newBookmarkName);
 
@@ -204,11 +215,9 @@ const handleNewBookmarkSubmit = function () {
     };
     
     api.createItem(newBookmarkEntry)
-      .then(res => res.json())
-      .then(() => {
-        store.addItem(newBookmarkEntry);  
-      })
-      .then (() => {
+      .then((res) => {
+        console.log(res);
+        store.addItem(res);  
         store.store.adding = false;
         render();
       })
@@ -269,7 +278,7 @@ const handleExpandBookmark = function () {
 //This doesn't work right yet.  It is functional but
 //has to use location.reload(), which in my mind isn't right.
 const handleDeleteBookmarkClicked = function () {
-  $('form').on('click', '.delete-bookmark-button', function (event) {
+  $('body').on('click', '.delete-bookmark-button', function (event) {
     console.log('Delete button clicked');
     event.preventDefault();
     const id = getItemIdFromElement(event.currentTarget);
@@ -299,6 +308,7 @@ const handleEditBookmarkSubmit = function () {};
 
 const bindEventListeners = function () {
   handleNewBookmarkSubmit();
+  handleNewBookmarkCancel();
   handleNewBookmarkClick();
   handleDeleteBookmarkClicked();
   handleEditBookmarkSubmit();

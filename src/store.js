@@ -13,8 +13,7 @@
 //for any testing with local functions.
 
 const store = {
-  bookmarks:
-  [],
+  bookmarks: [],
   adding: false,
   error: null,
   filter: 0
