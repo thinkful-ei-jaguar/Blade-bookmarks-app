@@ -27,12 +27,13 @@ const generateBookmarkElement = function (element, filterValue) {
   }
   if (element.expanded) {
     return `
-        <li class = 'bookmark-element' data-item-id="${element.id}">
-          ${element.title}                  
-          Rated ${element.rating}/5
+        <li class = 'bookmark-element' data-item-id="${element.id}" id = 'expanded-li-element'>
+          <div class = 'expanded-bookmark-title'>${element.title}</div><div class = 'expanded-bookmark-rating'>Rated ${element.rating}/5</div>
+          <div class = 'break'></div>
           <a href = '${element.url}' target = "_blank">${element.url}</a>
           <button class = 'delete-bookmark-button'>Delete Bookmark?</button>
-          <p>Description:  ${element.desc}</p>
+          <div class = 'break'></div>
+          Description:  ${element.desc}
         </li>
         
           
@@ -43,8 +44,7 @@ const generateBookmarkElement = function (element, filterValue) {
   
     return `
         <li class = 'bookmark-element' data-item-id="${element.id}">
-          ${element.title}
-          <span class = 'bookmark-rating'>Rated ${element.rating}/5</span>
+          <span class = 'bookmark-title'>${element.title}</span><span class = 'bookmark-rating'>Rated ${element.rating}/5</span>
         </li>
   `;}
 };
@@ -77,7 +77,6 @@ const generateAddFilterString = function () {
 
 const generateBookmarkString = function (bookmarkList, filterValue) {
   const bookmarks = bookmarkList.map((item) => generateBookmarkElement(item, filterValue));
-  
   const addFilter = generateAddFilterString();
   return addFilter + bookmarks.join('');
 };
@@ -86,13 +85,14 @@ const generateBookmarkString = function (bookmarkList, filterValue) {
 
 const generateAddingString = function () {
   let addingString = `
-  <p></p>
-  <p></p>
   <h1>My Bookmarks</h1>
   <label for="new-bookmark-name">Enter a new bookmark here:</label>
       <input type="text" name = "new-bookmark-name" id = "new-bookmark-name" placeholder = "New bookmark name" required>
+      <div class = 'break'></div>
       <label for="new-bookmark-url">Enter the URL.  Please include the https://</label>
       <input type="url" name = "new-bookmark-url" id = "new-bookmark-url" placeholder = "https://www.example.com" pattern = "https://.*" required>
+      <div class = 'break'></div>
+      <label for = "new-bookmark-rating"">Give it a rating</label>
       <select name="ratings" id="rating-dropdown">
           <option value="5">5 Stars</option>
           <option value="4">4 Stars</option>
@@ -100,8 +100,10 @@ const generateAddingString = function () {
           <option value="2">2 Stars</option>
           <option value="1">1 Star</option>
         </select>
+      <div class = 'break'></div>
       <label for="new-bookmark-description">Enter a description for the bookmark:</label>
-      <textarea name="new-bookmark-description" id="new-bookmark-description" cols="40" rows="10" placeholder="Enter your description here"></textarea>
+      <textarea name="new-bookmark-description" id="new-bookmark-description" cols="20" rows="10" placeholder="Enter your description here"></textarea>
+      <div class = 'break'></div>
       <button class = 'create-new-bookmark' type = 'submit'>Create New Bookmark</button>
       <button class = 'cancel-new-bookmark' type = 'reset'>I'm Done Creating Bookmarks</button>
       `;
@@ -142,6 +144,11 @@ const handleCloseError = function () {
   });
 };
 
+//fixLastItem will fix the border for the last item
+
+const fixLastItem = function () {
+  
+};
 //render is what it sounds like :-)
 
 const render = function (filterValue = 1) {
@@ -149,7 +156,7 @@ const render = function (filterValue = 1) {
   renderError();
 
   let bookmarks = store.store.bookmarks;
-
+  
   if (store.store.adding === true) {
     return generateAddingString();
   } else { 
