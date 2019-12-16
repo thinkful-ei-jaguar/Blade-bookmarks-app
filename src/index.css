@@ -84,4 +84,17 @@ dialog {
 
 }
 
+.error-container {
+  color: red;
+  font-weight: bold;
+}
+
+.error-container * {
+  display: inline-block;
+}
+
+#cancel-error {
+  margin-right: 0.5rem;
+}
+
 

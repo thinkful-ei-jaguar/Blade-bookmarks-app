@@ -67,7 +67,6 @@ const generateAddingString = function () {
       <label for="new-bookmark-url">Enter the URL.  Please include the https://</label>
       <input type="text" name = "new-bookmark-url" id = "new-bookmark-url" placeholder = "https://www.example.com">
       <select name="ratings" id="rating-dropdown">
-          <option value="">Select a Rating</option>
           <option value="5">5 Stars</option>
           <option value="4">4 Stars</option>
           <option value="3">3 Stars</option>
@@ -76,8 +75,8 @@ const generateAddingString = function () {
         </select>
       <label for="new-bookmark-description">Enter a description for the bookmark:</label>
       <textarea name="new-bookmark-description" id="new-bookmark-description" cols="40" rows="10" placeholder="Enter your description here"></textarea>
-      <button class = 'create-new-bookmark'>Create</button>
-      <button class = 'cancel-new-bookmark'>Cancel</button>
+      <button class = 'create-new-bookmark'>Create New Bookmark</button>
+      <button class = 'cancel-new-bookmark'>I'm Done Creating Bookmarks</button>
       `;
 
   $('.bookmarks-section').html(addingString);
@@ -86,13 +85,12 @@ const generateAddingString = function () {
 //generateError will create the html to display the error message
 
 const generateError = function (message) {
-  let errorMessage = `
-  <dialog class = 'error-content' open>
+  return `
+  <section class = 'error-content'>
       <p>${message}</p>
       <button id='cancel-error'>Okie Dokie</button>
-    </dialog>
+    </section>
   `;
-  $('.bookmarks-section').append(errorMessage);
 };
 
 //renderError checks the store to see if there is an error
@@ -100,7 +98,10 @@ const generateError = function (message) {
 
 const renderError = function () {
   if (store.store.error) {
-    generateError(store.store.error);    
+    const el = generateError(store.store.error);    
+    $('.error-container').html(el);
+  } else {
+    $('.error-container').empty();
   }
 };
 
@@ -108,6 +109,10 @@ const renderError = function () {
 //for when the user closes it
 
 const handleCloseError = function () {
+  $('.error-container').on('click', '#cancel-error', () => {
+    store.store.setError(null);
+    renderError();
+  });
 };
 
 //render is what it sounds like :-)
