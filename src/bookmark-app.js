@@ -248,14 +248,11 @@ const handleDeleteBookmarkClicked = function () {
     event.preventDefault();
     const id = getItemIdFromElement(event.currentTarget);
     api.deleteItem(id)
-      .then(res => res.json)
-      .then(res => store.findAndDelete(res))
-      .then(res => api.getItems())
-      .then(res => {
-        render();
-        //I don't like this.  I shouldn't have to do this right?
-        location.reload();
-      })
+      .then(() => {
+        store.findAndDelete(id);
+        return render();                      
+        // eslint-disable-next-line indent
+        })
       .catch((error) => {
         store.setError(error.message);
         renderError();
