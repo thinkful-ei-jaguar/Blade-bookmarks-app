@@ -38,9 +38,7 @@ const listApiFetch = function (...args) {
       if (error) {
         error.message = data.message;
         
-
-        store.store.error = error.message;
-
+        //alert(`An error was triggered...${error.message}`);
         return Promise.reject(error);
       }
 

@@ -12,31 +12,25 @@
 //For now, I'm going to stick a test bookmark here,
 //for any testing with local functions.
 
-const store = {
-  bookmarks: [],
-  adding: false,
-  error: null,
-  filter: 1
-};
 
 //findById will find a bookmark in the store by the id passed in
 
 const findById = function (id) {
-  return this.store.bookmarks.find(currentItem => currentItem.id === id);
+  return this.bookmarks.find(currentItem => currentItem.id === id);
 };
 
 //addItem will add a bookmark to the local store
 
 const addItem = function (bookmark) {
   bookmark.expanded = false;
-  this.store.bookmarks.push(bookmark);
+  this.bookmarks.push(bookmark);
   
 };
 
 //findAndDelete will delete a bookmark from the local store
 
 const findAndDelete = function (id) {
-  this.store.bookmarks = this.store.bookmarks.filter(currentItem => currentItem.id !== id);
+  this.bookmarks = this.bookmarks.filter(currentItem => currentItem.id !== id);
 };
 
 //findAndUpdate will change a bookmark currently in the local store
@@ -55,7 +49,11 @@ const setError = function (error) {
 };
 
 export default {
-  store,
+
+  bookmarks: [],
+  adding: false,
+  error: null,
+  filter: 1,
   findById,
   addItem,
   findAndDelete,
