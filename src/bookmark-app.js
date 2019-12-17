@@ -144,11 +144,6 @@ const handleCloseError = function () {
   });
 };
 
-//fixLastItem will fix the border for the last item
-
-const fixLastItem = function () {
-  
-};
 //render is what it sounds like :-)
 
 const render = function () {
@@ -174,7 +169,7 @@ const handleNewBookmarkClick = function () {
     event.preventDefault();
     console.log('Add bookmark button clicked');
     store.store.adding = true;
-  
+    store.store.bookmarks.forEach(element => element.expanded = false);
     render();
   });
 };
@@ -254,6 +249,7 @@ const handleRatingsDropdown = function () {
     event.preventDefault();
     const filterValue = parseInt($('#filter-button').val());
     store.store.filter = filterValue;
+    store.store.bookmarks.forEach(element => element.expanded = false);
     render(filterValue);
   });  
 };
