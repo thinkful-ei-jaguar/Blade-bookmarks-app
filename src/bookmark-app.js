@@ -59,6 +59,7 @@ const generateBookmarkElement = function (element, filterValue) {
 
 const generateAddFilterString = function () {
   return `
+  <form id = 'bookmarks-form'>
   <section>
       <h1>My Bookmarks</h1>
       <div class = 'add-filter-buttons'>
@@ -74,14 +75,20 @@ const generateAddFilterString = function () {
       </select>
       </div>
     </section>  
+    </form>
   `;
 };
-
 
 const generateBookmarkString = function (bookmarkList, filterValue) {
   const bookmarks = bookmarkList.map((item) => generateBookmarkElement(item, filterValue));
   const addFilter = generateAddFilterString();
-  return addFilter + bookmarks.join('');
+  // eslint-disable-next-line quotes
+  const ulStart = `<ul class = 'bookmarks-section'>`;
+  // eslint-disable-next-line quotes
+  const ulEnd = `</ul>`;
+  // eslint-disable-next-line quotes
+  const divError = `<div class = 'error-container'></div>`;
+  return divError+addFilter + ulStart + bookmarks.join('') + ulEnd;
 };
 
 //generateAddingString will generate an html string for the adding a bookmark view
@@ -89,6 +96,8 @@ const generateBookmarkString = function (bookmarkList, filterValue) {
 const generateAddingString = function () {
   let addingString = `
   <h1>My Bookmarks</h1>
+  <div class = 'error-container'></div>
+  <form id = "bookmarks-form">
   <label for="new-bookmark-name">Enter a new bookmark here:</label>
       <input type="text" name = "new-bookmark-name" id = "new-bookmark-name" placeholder = "New bookmark name" required>
       <div class = 'break'></div>
@@ -109,19 +118,19 @@ const generateAddingString = function () {
       <div class = 'break'></div>
       <button class = 'create-new-bookmark' type = 'submit'>Create New Bookmark</button>
       <button class = 'cancel-new-bookmark' type = 'reset'>Cancel</button>
+    </form>
       `;
-  $('.bookmarks-section').html('');
-  $('#bookmarks-form').html(addingString);
+  $('body').html('');
+  $('body').html(addingString);
 };
 
 //generateError will create the html to display the error message
 
 const generateError = function (message) {
   return `
-  <section class = 'error-content'>
+      
       <p>Error!  The following error has occurred: ${message}</p>
       <button id='cancel-error'>Okay :-(</button>
-    </section>
   `;
 };
 
@@ -129,8 +138,8 @@ const generateError = function (message) {
 //if there is one, it passes it to generateError
 
 const renderError = function () {
-  if (store.store.error) {
-    const el = generateError(store.store.error);    
+  if (store.error) {
+    const el = generateError(store.error);    
     $('.error-container').html(el);  
   } else {
     $('.error-container').empty();
@@ -141,8 +150,9 @@ const renderError = function () {
 //for when the user closes it
 
 const handleCloseError = function () {
-  $('.error-container').on('click', '#cancel-error', () => {
-    store.store.setError(null);
+  $('body').on('click', '#cancel-error', () => {
+    console.log('Calling handleCloseError');
+    store.setError(null);
     renderError();
   });
 };
@@ -152,15 +162,16 @@ const handleCloseError = function () {
 const render = function () {
   console.log('Render function fired');
   renderError();
-  let filterValue = store.store.filter;
-  let bookmarks = store.store.bookmarks;
+  let filterValue = store.filter;
+  let bookmarks = store.bookmarks;
+  console.log(bookmarks);
   
-  if (store.store.adding === true) {
+  if (store.adding === true) {
     return generateAddingString();
   } else { 
     const bookmarkString = generateBookmarkString(bookmarks, filterValue);
-    $('#bookmarks-form').html('');
-    $('.bookmarks-section').html(bookmarkString);
+    $('body').html('');
+    $('body').html(bookmarkString);
   }
 
 };
@@ -171,8 +182,8 @@ const handleNewBookmarkClick = function () {
   $('body').on('click', '.add-entry-button', function (event) {
     event.preventDefault();
     console.log('Add bookmark button clicked');
-    store.store.adding = true;
-    store.store.bookmarks.forEach(element => element.expanded = false);
+    store.adding = true;
+    store.bookmarks.forEach(element => element.expanded = false);
     render();
   });
 };
@@ -182,9 +193,9 @@ const handleNewBookmarkClick = function () {
 //adding bookmarks or wish to discard the current one
 
 const handleNewBookmarkCancel = function () {
-  $('form#bookmarks-form').on('click', '.cancel-new-bookmark', function (event) {
+  $('body').on('click', 'button.cancel-new-bookmark', function (event) {
     event.preventDefault();
-    store.store.adding = false;
+    store.adding = false;  
     return render();
   });
 };
@@ -196,7 +207,7 @@ const handleNewBookmarkCancel = function () {
 const handleNewBookmarkSubmit = function () {
 
 
-  $('#bookmarks-form').on('submit', function (event) {
+  $('body').on('submit', 'form', function (event) {
     event.preventDefault();
 
     console.log('Create new bookmark clicked');
@@ -219,17 +230,19 @@ const handleNewBookmarkSubmit = function () {
       desc: newDescription,
       rating: newRating
     };
+
+
     
     api.createItem(newBookmarkEntry)
       .then((res) => {
         console.log(res);
         store.addItem(res);  
-        store.store.adding = false;
+        store.adding = false;
         render();
       })
       .catch((error) => {
-        store.store.setError(error.message);
-        alert(`testing newbookmark with error messages ${error.message}`);
+        store.setError(error.message);
+        //alert(`testing newbookmark with error messages ${error.message}`);
         renderError();
       });
   });
@@ -252,8 +265,8 @@ const handleRatingsDropdown = function () {
   $('body').on('change', '#filter-button', function (event) {
     event.preventDefault();
     const filterValue = parseInt($('#filter-button').val());
-    store.store.filter = filterValue;
-    store.store.bookmarks.forEach(element => element.expanded = false);
+    store.filter = filterValue;
+    store.bookmarks.forEach(element => element.expanded = false);
     render(filterValue);
   });  
 };
@@ -273,7 +286,7 @@ const handleExpandBookmark = function () {
     console.log('You clicked a list item');
     const id = getItemIdFromElement(event.currentTarget);
     console.log(id);
-    store.store.bookmarks.forEach(element => {
+    store.bookmarks.forEach(element => {
       if (element.id === id) {
         element.expanded = !element.expanded;
         return render();
@@ -294,7 +307,7 @@ const handleExpandKeyboard = function () {
     console.log('You clicked a list item');
     const id = getItemIdFromElement(event.currentTarget);
     console.log(id);
-    store.store.bookmarks.forEach(element => {
+    store.bookmarks.forEach(element => {
       if (element.id === id) {
         element.expanded = !element.expanded;
         return render();
@@ -321,8 +334,7 @@ const handleDeleteBookmarkClicked = function () {
         // eslint-disable-next-line indent
         })
       .catch((error) => {
-        store.store.setError(error.message);
-        alert(`testing newbookmark with error messages ${error.message}`);
+        store.setError(error.message);
         renderError();
       });
       
@@ -353,6 +365,7 @@ const bindEventListeners = function () {
 
 export default {
   render,
+  renderError,
   bindEventListeners
 };
 

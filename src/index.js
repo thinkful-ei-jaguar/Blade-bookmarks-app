@@ -23,8 +23,15 @@ const main = function () {
   api.getItems()
     .then((items) => {
       items.forEach((item) => store.addItem(item));
-      store.store.bookmarks.forEach((item) => item.expanded = false);
+      console.log(store, "26");
+      store.bookmarks.forEach((item) => item.expanded = false);
       bookmarkApp.render(1);
+    })
+    .catch((error) => {
+      console.log(store, "31");
+      store.setError(error.message);
+      //alert(`testing newbookmark with error messages ${error.message}`);
+      bookmarkApp.renderError();
     });
 
 
