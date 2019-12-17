@@ -71,6 +71,11 @@ li {
   font-size: 24px;
   border-radius: 13px;
 }
+p {
+  max-width: 300px;
+  flex-wrap: wrap;
+  overflow-wrap: break-word;
+}
 label {
   font-size: 20px;
 }

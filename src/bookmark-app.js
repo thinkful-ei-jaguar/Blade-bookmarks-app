@@ -33,7 +33,7 @@ const generateBookmarkElement = function (element, filterValue) {
           <a href = '${element.url}' target = "_blank">${element.url}</a>
           <button class = 'delete-bookmark-button'>Delete Bookmark?</button>
           <div class = 'break'></div>
-          Description:  ${element.desc}
+          <p>Description:  ${element.desc}</p>
         </li>
         
           
