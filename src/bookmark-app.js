@@ -116,8 +116,8 @@ const generateAddingString = function () {
 const generateError = function (message) {
   return `
   <section class = 'error-content'>
-      <p>${message}</p>
-      <button id='cancel-error'>Okie Dokie</button>
+      <p>Error!  The following error has occurred: ${message}</p>
+      <button id='cancel-error'>Okay :-(</button>
     </section>
   `;
 };
@@ -128,7 +128,7 @@ const generateError = function (message) {
 const renderError = function () {
   if (store.store.error) {
     const el = generateError(store.store.error);    
-    $('.error-container').html(el);
+    $('.error-container').html(el);  
   } else {
     $('.error-container').empty();
   }
@@ -225,8 +225,9 @@ const handleNewBookmarkSubmit = function () {
         render();
       })
       .catch((error) => {
-        store.setError(error.message);
-        //renderError();
+        store.store.setError(error.message);
+        alert(`testing newbookmark with error messages ${error.message}`);
+        renderError();
       });
   });
 
@@ -287,6 +288,7 @@ const handleExpandKeyboard = function () {
     }   
     event.preventDefault();
     event.stopPropagation();
+    this.focus();
     console.log('You clicked a list item');
     const id = getItemIdFromElement(event.currentTarget);
     console.log(id);
@@ -294,6 +296,7 @@ const handleExpandKeyboard = function () {
       if (element.id === id) {
         element.expanded = !element.expanded;
         return render();
+
       }
     });
   });
@@ -315,7 +318,8 @@ const handleDeleteBookmarkClicked = function () {
         // eslint-disable-next-line indent
         })
       .catch((error) => {
-        store.setError(error.message);
+        store.store.setError(error.message);
+        alert(`testing newbookmark with error messages ${error.message}`);
         renderError();
       });
       

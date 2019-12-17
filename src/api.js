@@ -3,7 +3,7 @@ import store from "./store";
 
 
 //This will be our base api url that we append specific queries to
-const BASE_URL = 'https://thinkful-list-api.herokuapp.com/Blade/bookmarks';
+const BASE_URL = 'https://thinkful-list-api.herokuapp.com/Blade/bookmarks/';
 
 
 
@@ -38,11 +38,8 @@ const listApiFetch = function (...args) {
       if (error) {
         error.message = data.message;
         
-        /*
+
         store.store.error = error.message;
-        console.log(store.store.error);
-        bookmarkApp.renderError();
-        */
 
         return Promise.reject(error);
       }

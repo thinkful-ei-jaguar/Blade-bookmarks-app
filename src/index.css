@@ -97,6 +97,7 @@ li {
 .error-container {
   color: red;
   font-weight: bold;
+  font-size: 24px;
 }
 
 .error-container * {
