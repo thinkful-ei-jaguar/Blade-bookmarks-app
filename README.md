@@ -36,6 +36,7 @@ to the first tabindex on the page after you close an expanded bookmark.  Trying 
 it will display at the top of the app.
 
 
-6.) I can select from a dropdown (a <select> element) a "minimum rating" to filter the list by all bookmarks rated at or above the chosen selection
+6.) I can select from a dropdown (a <select> element) a "minimum rating" to filter the list by all bookmarks rated at or above the chosen selection.  
+
 
 /** You sure can and it actually works cleanly.  Unfortunately it does not sort them in order of ratings, which would be cool but I probably won't have time for.    
