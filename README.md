@@ -39,6 +39,6 @@ it will display at the top of the app.
 /** You sure can and it actually works cleanly.  Unfortunately it does not sort them in order of ratings, which would be cool but I probably won't have time for.
 
 
-(Extension feature - optional) I can edit the rating and description of a bookmark in my list
+7.) (Extension feature - optional) I can edit the rating and description of a bookmark in my list
 
 /** No, you can't, but if I have enough extra time I will add that :-)
