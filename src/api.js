@@ -43,7 +43,7 @@ const listApiFetch = function (...args) {
         console.log(store.store.error);
         bookmarkApp.renderError();
         */
-       
+
         return Promise.reject(error);
       }
 
