@@ -48,3 +48,4 @@ it will display at the top of the app.
 
 ### App Link
 
+https://thinkful-ei-jaguar.github.io/Blade-bookmarks-app/dist/
