@@ -22,7 +22,7 @@ Detailed view expands to additionally display description and a
 "Visit Site" link
 
 /** Yes you can.  Unfortunately for keyboard users, your focus switches back
-to the first tabindex on the page.  Trying to see if I can change this.
+to the first tabindex on the page after you close an expanded bookmark.  Trying to see if I can change this.
 
 4.) I can remove bookmarks from my bookmark list
 

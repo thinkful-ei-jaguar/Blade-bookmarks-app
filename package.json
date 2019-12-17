@@ -20,7 +20,8 @@
   "homepage": "https://github.com/thinkful-ei-jaguar/Blade-bookmarks-app#readme",
   "dependencies": {
     "jquery": "^3.4.1",
-    "normalize.css": "^8.0.1"
+    "normalize.css": "^8.0.1",
+    "simple-rating-stars": "^1.4.0"
   },
   "devDependencies": {
     "css-loader": "^3.3.2",
