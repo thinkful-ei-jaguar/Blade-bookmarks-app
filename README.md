@@ -1,11 +1,11 @@
-#My Bookmarks
+# My Bookmarks
 
 This is Blade's solo bookmark app project.  
 
-###It allows a user to create bookmarks with links to websites.  The bookmarks have a title, url, rating, and description that are provided by the user.
+#### It allows a user to create bookmarks with links to websites.  The bookmarks have a title, url, rating, and description that are provided by the user.
 
 
-##User Stories
+## User Stories
 
 1.) I can add bookmarks to my bookmark list. Bookmarks contain:
 
