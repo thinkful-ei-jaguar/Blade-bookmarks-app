@@ -1,6 +1,11 @@
+#My Bookmarks
+
 This is Blade's solo bookmark app project.  
 
-It allows a user to create bookmarks with links to websites.  The bookmarks have a title, url, rating, and description that are provided by the user.
+###It allows a user to create bookmarks with links to websites.  The bookmarks have a title, url, rating, and description that are provided by the user.
+
+
+##User Stories
 
 1.) I can add bookmarks to my bookmark list. Bookmarks contain:
 
@@ -36,7 +41,9 @@ to the first tabindex on the page after you close an expanded bookmark.  Trying 
 it will display at the top of the app.
 
 
-6.) I can select from a dropdown (a <select> element) a "minimum rating" to filter the list by all bookmarks rated at or above the chosen selection.  <br />
+6.) I can select from a dropdown (a select element) a "minimum rating" to filter the list by all bookmarks rated at or above the chosen selection.  <br />
 
 
 /** You sure can and it actually works cleanly.  Unfortunately it does not sort them in order of ratings, which would be cool but I probably won't have time for.    
+
+
