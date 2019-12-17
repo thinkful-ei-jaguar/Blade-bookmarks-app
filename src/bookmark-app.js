@@ -16,18 +16,9 @@ import $ from 'jquery';
 import store from './store';
 import api from './api';
 import { filter } from 'minimatch';
-import Stars from 'simple-rating-stars';
 
 
-const SomeStars = () => (
-  `<Stars
-    stars={4}
-    outOf={5}
-    full={'#d00'}
-    empty={'#E1F1FF'}
-    stroke={'#369'}
-  />`
-);
+
 //generateBookmarkElement will generate the html for an addition
 //to the bookmark list
 
