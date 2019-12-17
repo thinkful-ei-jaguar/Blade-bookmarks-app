@@ -288,7 +288,6 @@ const handleExpandKeyboard = function () {
     }   
     event.preventDefault();
     event.stopPropagation();
-    this.focus();
     console.log('You clicked a list item');
     const id = getItemIdFromElement(event.currentTarget);
     console.log(id);
@@ -299,6 +298,7 @@ const handleExpandKeyboard = function () {
 
       }
     });
+    $('#expanded-li-element').focus();
   });
 };
 
