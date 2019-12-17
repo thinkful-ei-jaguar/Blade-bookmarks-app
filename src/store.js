@@ -16,7 +16,7 @@ const store = {
   bookmarks: [],
   adding: false,
   error: null,
-  filter: 0
+  filter: 1
 };
 
 //findById will find a bookmark in the store by the id passed in

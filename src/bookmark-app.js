@@ -27,7 +27,7 @@ const generateBookmarkElement = function (element, filterValue) {
   }
   if (element.expanded) {
     return `
-        <li class = 'bookmark-element' data-item-id="${element.id}" id = 'expanded-li-element'>
+        <li class = 'bookmark-element' data-item-id="${element.id}" id = 'expanded-li-element' tabindex = "0">
           <div class = 'expanded-bookmark-title'>${element.title}</div><div class = 'expanded-bookmark-rating'>Rated ${element.rating}/5</div>
           <div class = 'break'></div>
           <a href = '${element.url}' target = "_blank">${element.url}</a>
@@ -43,7 +43,7 @@ const generateBookmarkElement = function (element, filterValue) {
   } else {
   
     return `
-        <li class = 'bookmark-element' data-item-id="${element.id}">
+        <li class = 'bookmark-element' data-item-id="${element.id}" tabindex = "0">
           <span class = 'bookmark-title'>${element.title}</span><span class = 'bookmark-rating'>Rated ${element.rating}/5</span>
         </li>
   `;}
@@ -105,7 +105,7 @@ const generateAddingString = function () {
       <textarea name="new-bookmark-description" id="new-bookmark-description" cols="20" rows="10" placeholder="Enter your description here"></textarea>
       <div class = 'break'></div>
       <button class = 'create-new-bookmark' type = 'submit'>Create New Bookmark</button>
-      <button class = 'cancel-new-bookmark' type = 'reset'>I'm Done Creating Bookmarks</button>
+      <button class = 'cancel-new-bookmark' type = 'reset'>Cancel</button>
       `;
   $('.bookmarks-section').html('');
   $('#bookmarks-form').html(addingString);
@@ -151,10 +151,10 @@ const fixLastItem = function () {
 };
 //render is what it sounds like :-)
 
-const render = function (filterValue = 1) {
+const render = function () {
   console.log('Render function fired');
   renderError();
-
+  let filterValue = store.store.filter;
   let bookmarks = store.store.bookmarks;
   
   if (store.store.adding === true) {
@@ -204,16 +204,16 @@ const handleNewBookmarkSubmit = function () {
     console.log('Create new bookmark clicked');
 
     let newBookmarkName = $('#new-bookmark-name').val();
-    console.log(newBookmarkName);
+    
 
     let newUrlName = $('#new-bookmark-url').val();
-    console.log(newUrlName);
+
   
     let newRating = parseInt($('#rating-dropdown').val());
-    console.log(newRating);
+   
 
     let newDescription = $('#new-bookmark-description').val();
-    console.log(newDescription);
+   
 
     const newBookmarkEntry = {
       title: newBookmarkName,
@@ -253,6 +253,7 @@ const handleRatingsDropdown = function () {
   $('body').on('change', '#filter-button', function (event) {
     event.preventDefault();
     const filterValue = parseInt($('#filter-button').val());
+    store.store.filter = filterValue;
     render(filterValue);
   });  
 };
@@ -263,9 +264,10 @@ const handleRatingsDropdown = function () {
 
 const handleExpandBookmark = function () {
   $('body').on('click', 'li.bookmark-element', function (event) {
+    
     if (event.target !== this) {
       return;
-    }
+    }   
     event.preventDefault();
     event.stopPropagation();
     console.log('You clicked a list item');
@@ -280,11 +282,31 @@ const handleExpandBookmark = function () {
   });
 };
 
+//handleExpandKeyboard does the same as above with the keyboard
+const handleExpandKeyboard = function () {
+  $('body').on('keypress', 'li.bookmark-element', function (event) {
+    
+    if (event.target !== this) {
+      return;
+    }   
+    event.preventDefault();
+    event.stopPropagation();
+    console.log('You clicked a list item');
+    const id = getItemIdFromElement(event.currentTarget);
+    console.log(id);
+    store.store.bookmarks.forEach(element => {
+      if (element.id === id) {
+        element.expanded = !element.expanded;
+        return render();
+      }
+    });
+  });
+};
+
+
 //handleDeleteBookmarkClicked will listen for when a user deletes
 //a bookmark item
 
-//This doesn't work right yet.  It is functional but
-//has to use location.reload(), which in my mind isn't right.
 const handleDeleteBookmarkClicked = function () {
   $('body').on('click', '.delete-bookmark-button', function (event) {
     console.log('Delete button clicked');
@@ -323,6 +345,7 @@ const bindEventListeners = function () {
   handleExpandBookmark();
   handleCloseError();
   handleRatingsDropdown();
+  handleExpandKeyboard();
 };
 
 export default {
