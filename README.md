@@ -1,40 +1,44 @@
 This is Blade's solo bookmark app project.  
 
-"Stay awhile and listen." -Deckard Cain
+1.) I can add bookmarks to my bookmark list. Bookmarks contain:
 
-I can add bookmarks to my bookmark list. Bookmarks contain:
+  a.) title
+  b.) url link
+  c.) description
+  d.) rating (1-5)
 
-title
-url link
-description
-rating (1-5)
-
-/** Yes, but the description is optional and rating is prechosen (to avoid null)
+/** Yes, but the description is optional and rating defaults to 5 if
+one is not chosen
 
 
-I can see a list of my bookmarks when I first open the app.
+2.) I can see a list of my bookmarks when I first open the app.
 All bookmarks in the list default to a "condensed" view showing only title and rating.
 
-/** Yep
+/** Yes.  Bookmarks also condense whenever applying a filter or going to the
+add bookmark section and adding a bookmark or canceling.
 
-I can click on a bookmark to display the "detailed" view.
-Detailed view expands to additionally display description and a "Visit Site" link
+3.) I can click on a bookmark to display the "detailed" view.
+Detailed view expands to additionally display description and a 
+"Visit Site" link
 
-/** Yes you can, but the interface is currently (temporarily) hideous
+/** Yes you can.  Unfortunately for keyboard users, your focus switches back
+to the first tabindex on the page.  Trying to see if I can change this.
 
-I can remove bookmarks from my bookmark list
+4.) I can remove bookmarks from my bookmark list
 
-/** Yes you can, but I had to "cheat" and use a page reload because it wouldn't rerender
+/** Yes you can
 
-I receive appropriate feedback when I cannot submit a bookmark
+5.) I receive appropriate feedback when I cannot submit a bookmark
 
-/** Yes, but for some reason when you click okay you're going to be taken back to the main view.  I am going to put in a ticket for this to get help on Monday
+/** Yes you do.  As a user you will probably only get an html based error if you fill out the add bookmark form incorrectly.  However if there is a 40x error code
+it will display at the top of the app.
 
-I can select from a dropdown (a <select> element) a "minimum rating" to filter the list by all bookmarks rated at or above the chosen selection
+
+6.) I can select from a dropdown (a <select> element) a "minimum rating" to filter the list by all bookmarks rated at or above the chosen selection
 
 /** You sure can and it actually works cleanly.  Unfortunately it does not sort them in order of ratings, which would be cool but I probably won't have time for.
 
 
 (Extension feature - optional) I can edit the rating and description of a bookmark in my list
 
-/** No, you can't, but if I finish making it look pretty in time I will add that in :-)
+/** No, you can't, but if I have enough extra time I will add that :-)
